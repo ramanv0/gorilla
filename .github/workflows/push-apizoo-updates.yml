@@ -1,0 +1,26 @@
+name: Update API Zoo Data
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'data/apizoo/**'
+
+jobs:
+  send-updates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      
+      - name: Install Dependencies
+        run: sudo apt-get install -y jq curl
+      
+      - name: Send Updated API Data to Server
+        run: |
+          FILES=$(git diff --name-only ${{ github.sha }} ${{ github.event.before }} | grep 'data/apizoo/')
+          for FILE in $FILES; do
+            DATA=$(jq -c . < "$FILE")
+            curl -X POST -H "Content-Type: application/json" -d "$DATA" https://5472-23-93-94-38.ngrok-free.app/api/update
+          done
