@@ -1,0 +1,23 @@
+[
+  {
+    "user_name": "test-action",
+    "api_name": "Kubernetes Read Pod",
+    "api_call": "GET /api/v1/namespaces/{namespace}/pods/{podName}",
+    "api_version": "1.0",
+    "api_arguments": {
+      "namespace": "string (The namespace where the Pod is located)",
+      "podName": "string (The name of the Pod to read)"
+    },
+    "functionality": "Reads information about a specified Kubernetes Pod in REST format",
+    "env_requirements": ["kubectl"],
+    "example_code": "import requests\n\n# Read a Pod in a namespace\napi_url = 'https://your-kubernetes-api-server/api/v1/namespaces/your-namespace/pods/your-pod-name'\nheaders = {'Authorization': 'Bearer your-auth-token'}\nresponse = requests.get(api_url, headers=headers)\nprint(response.json())",
+    "meta_data": {
+      "description": "This API method allows users to read information about a specified Kubernetes Pod using RESTful API calls.",
+      "documentation": "https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#get"
+    },
+    "questions": [
+      "How can I retrieve information about a specific Pod?",
+      "What method should I use to programmatically access Pod details?"
+    ]
+  },
+]
