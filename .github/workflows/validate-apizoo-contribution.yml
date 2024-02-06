@@ -18,18 +18,33 @@ jobs:
 
       - name: Install jq
         run: sudo apt-get install jq
+
+      - name: Get list of changed files
+        id: files
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const result = await github.rest.pulls.listFiles({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+            });
+            const fileList = result.data.map(file => file.filename);
+            core.setOutput('list', fileList.join('\n'));
       
       - name: Check for duplicate APIs
         id: check
         run: |
-          FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep 'data/apizoo/')
+          FILES="${{ steps.files.outputs.list }}"
           for FILE in $FILES; do
-            DATA=$(jq -c . < "$FILE")
-            RESPONSE=$(curl -s -X POST -H "Content-Type: application/json" -d "$DATA" https://5472-23-93-94-38.ngrok-free.app/api/validate)
-            echo "Validation response for $FILE: $RESPONSE"
-            if [[ "$RESPONSE" == *"\"duplicate\": true"* ]]; then
-              echo "::set-output name=duplicate::true"
-              break
+            if [[ "$FILE" == "data/apizoo/"* ]]; then
+              DATA=$(jq -c . < "$FILE")
+              RESPONSE=$(curl -s -X POST -H "Content-Type: application/json" -d "$DATA" https://5472-23-93-94-38.ngrok-free.app/api/validate)
+              echo "Validation response for $FILE: $RESPONSE"
+              if [[ "$RESPONSE" == *"\"duplicate\": true"* ]]; then
+                echo "::set-output name=duplicate::true"
+                break
+              fi
             fi
           done
       
