@@ -1,0 +1,25 @@
+[
+  {
+    "user_name": "action test #2",
+    "api_name": "Stripe API - Charges",
+    "api_call": "stripe.Charge.create(amount={amount}, currency={currency}, source={source}, description={description})",
+    "api_version": "2023-10-16",
+    "api_arguments": {
+        "amount": "integer",
+        "currency": "string",
+        "source": "string",
+        "description": "string"
+    },
+    "functionality": "Create, retrieve, update, and delete charges.",
+    "env_requirements": ["stripe"],
+    "example_code": "stripe.Charge.create(amount=2000, currency='usd', source='tok_amex', description='Charge for jenny.rosen@example.com')",
+    "meta_data": {
+      "description": "The Stripe Charge API allows you to create, retrieve, update, and delete charges. This API is part of Stripe's suite for handling payments."
+    },
+    "questions": [
+      "Charge Jenny Rosen $2000 in USD.",
+      "Can you check how much I charged Sam Rosen?",
+      "Undo my charge to Ronald Samuels"
+    ]
+  }
+]
