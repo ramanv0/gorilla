@@ -33,12 +33,6 @@ jobs:
             fi
           done
       
-      - name: Fail if duplicate API
-        if: steps.check.outputs.duplicate == 'true'
-        run: |
-          echo "Duplicate API detected, failing the workflow"
-          exit 1
-      
       - name: Comment on PR if duplicate API
         if: steps.check.outputs.duplicate == 'true'
         uses: peter-evans/create-or-update-comment@v1
@@ -47,3 +41,9 @@ jobs:
           body: |
             :warning: **Duplicate API detected**: This PR cannot be merged.
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Fail if duplicate API
+        if: steps.check.outputs.duplicate == 'true'
+        run: |
+          echo "Duplicate API detected, failing the workflow"
+          exit 1
