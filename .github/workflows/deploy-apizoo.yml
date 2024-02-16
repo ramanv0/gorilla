@@ -1,0 +1,40 @@
+name: Build and Deploy API Zoo to GitHub Pages
+
+on:
+  push:
+    branches:
+      - gh-pages
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install Dependencies
+      run: npm install
+      working-directory: apizoo
+
+    - name: Build Vue App
+      run: npm run build
+      working-directory: apizoo
+      env:
+        NODE_ENV: production
+
+    - name: Rename and Move Build Directory
+      run: mv dist apizoo-dist
+      working-directory: apizoo
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./apizoo/apizoo-dist
+        clean: false # preserve existing files in the gh-pages branch
