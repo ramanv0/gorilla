@@ -3,7 +3,7 @@ name: Build and Deploy API Zoo to GitHub Pages
 on:
   push:
     branches:
-      - gh-pages
+      - apizoo-index-webpage-testing
 
 jobs:
   build-and-deploy:
