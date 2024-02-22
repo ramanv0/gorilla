@@ -1,0 +1,20 @@
+[
+    {
+      "user_name": "elva01",
+      "api_name": "Google Forms - Forms.batchUpdate",
+      "api_call": "form_service.forms().batchUpdate(formId=form_id, body=update).execute()",
+      "api_version": "1.0",
+      "api_arguments": {
+        "formId": "Required. The form ID."
+      },
+      "functionality": "Change the form with a batch of updates.",
+      "env_requirements": ["google-auth", "google-auth-oauthlib", "google-auth-httplib2", "google-api-python-client"],
+      "meta_data": {
+        "description": "The Forms.batchUpdate method groups changes in batches and can add content or update settings, metadata, or content."
+      },
+      "questions": [
+        "Update the quiz description with a due date of next Friday.",
+        "Add a new video Item to the form."
+      ]
+    }
+  ]
