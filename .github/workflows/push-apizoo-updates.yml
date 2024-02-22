@@ -3,7 +3,7 @@ name: Update API Zoo Data
 on:
   push:
     branches:
-      - main
+      - test-apizoo-index-actions
     paths:
       - 'data/apizoo/**'
 
